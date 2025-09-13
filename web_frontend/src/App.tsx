@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import InputAreaComponent from './InputAreaComponent';
+import { NetworkInterface } from './NetworkInterface';
+
 
 function App() {
+
+  const [networkInterface, ] = useState<NetworkInterface>(new NetworkInterface());
+
   return (
     <div className="App">
       <header className="App-header">
+        <InputAreaComponent networkInterface={networkInterface} />       
+        
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.

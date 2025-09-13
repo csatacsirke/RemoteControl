@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+
+.input-area {
+  background-color: gray;
+  width: 100%;
+  height: 700px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pointer-is-captured {
+  background-color: darkgray;
+}
