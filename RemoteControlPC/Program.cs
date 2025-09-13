@@ -26,11 +26,14 @@ namespace RemoteControlPC
 
         public RemoteControlApplication() {
             //networkHandler = new NetworkHandler(OnMessage);
-            networkHandler = new NetworkHandler(commandProcessor.Process);
-            networkHandler.Host();
+            
         }
 
         public void Run() {
+
+            networkHandler = new NetworkHandler(commandProcessor.Process);
+            networkHandler.StartHostThread();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());

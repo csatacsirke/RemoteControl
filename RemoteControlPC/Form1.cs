@@ -17,7 +17,7 @@ namespace RemoteControlPC {
 
         private void button1_Click(object sender, EventArgs e) {
             Thread.Sleep(3000);
-            VirtaulKeyboard.Test();
+            VirtualKeyboard.Test();
         }
 
     }

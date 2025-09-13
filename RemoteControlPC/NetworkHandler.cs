@@ -12,18 +12,19 @@ using System.Net;
 namespace RemoteControlPC {
     class NetworkHandler {
 
-        private UdpClient udpClient = new UdpClient();
-        private Action<string> OnMessageReceived;
+        private UdpClient m_udpClient = new UdpClient();
+        private Action<string> m_OnMessageReceivedCallback;
+        private Thread m_thread;
 
         public NetworkHandler(Action<string> OnMessageReceived) {
-            this.OnMessageReceived = OnMessageReceived;
+            this.m_OnMessageReceivedCallback = OnMessageReceived;
         }
 
 
-        public void Host() {
+        public void StartHostThread() {
             try {
-                Thread thread = new Thread(HostThread);
-                thread.Start();
+                m_thread = new Thread(HostThread);
+                m_thread.Start();
 
             } catch(Exception e) {
                 MessageBox.Show(e.ToString());
@@ -31,21 +32,21 @@ namespace RemoteControlPC {
         }
 
         public void Close() {
-            udpClient.Close();
+            m_udpClient.Close();
         }
 
         private void HostThread() {
             
             IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 16666);
-            udpClient.Client.Bind(RemoteIpEndPoint);
+            m_udpClient.Client.Bind(RemoteIpEndPoint);
 
 
 
             try {
                 while (true) {
-                    Byte[] receiveBytes = udpClient.Receive(ref RemoteIpEndPoint);
+                    Byte[] receiveBytes = m_udpClient.Receive(ref RemoteIpEndPoint);
                     string message = System.Text.Encoding.UTF8.GetString(receiveBytes);
-                    OnMessageReceived(message);
+                    m_OnMessageReceivedCallback(message);
                 }
             } catch (SocketException) {
                 // socket closed

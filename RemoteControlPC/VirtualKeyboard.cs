@@ -13,7 +13,7 @@ namespace RemoteControlPC {
 
 
 
-    class VirtaulKeyboard {
+    class VirtualKeyboard {
         enum InputType : uint {
             INPUT_MOUSE = 0,
             INPUT_KEYBOARD = 1,

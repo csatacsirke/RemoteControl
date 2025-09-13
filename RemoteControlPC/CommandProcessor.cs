@@ -20,20 +20,20 @@ namespace RemoteControlPC {
             switch (words.First()) {
                 case "keys":
                     foreach(var word in words.Skip(1)) {
-                        VirtaulKeyboard.SimulateKeypress(word);
+                        VirtualKeyboard.SimulateKeypress(word);
                     }
                     break;
                 case "move":
                     foreach (var word in words.Skip(1)) {
-                        VirtaulKeyboard.SimulateMouseMove(word);
+                        VirtualKeyboard.SimulateMouseMove(word);
                     }
                     break;
                 case "click":
-                    VirtaulKeyboard.SimulateMouseClick();
+                    VirtualKeyboard.SimulateMouseClick();
                     break;
                 case "scroll":
                     foreach (var word in words.Skip(1)) {
-                        VirtaulKeyboard.SimulateScroll(word);
+                        VirtualKeyboard.SimulateScroll(word);
                     }
                     break;
                 case "spec":
