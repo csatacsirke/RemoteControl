@@ -14,9 +14,31 @@ namespace RemoteControlPC
         [STAThread]
         static void Main()
         {
+            RemoteControlApplication app = new RemoteControlApplication();
+            app.Run();
+
+        }
+    }
+
+    class RemoteControlApplication {
+        private CommandProcessor commandProcessor = new CommandProcessor();
+        private NetworkHandler networkHandler;
+
+        public RemoteControlApplication() {
+            //networkHandler = new NetworkHandler(OnMessage);
+            networkHandler = new NetworkHandler(commandProcessor.Process);
+            networkHandler.Host();
+        }
+
+        public void Run() {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+
+            // todo majd ezt nem muszáj bezárni 
+            networkHandler.Close();
         }
+        
+
     }
 }
