@@ -5,6 +5,8 @@ import InputAreaComponent from './InputAreaComponent';
 import { ILogger, NetworkInterface } from './NetworkInterface';
 
 
+// TODO config file
+const wsUri = "http://nagygep.local:16666";
 
 function App() {
 
@@ -21,7 +23,7 @@ function App() {
         setNetworkLog(networkLog + "\r\n" + message);
       }
     };
-    return new NetworkInterface(networkLogger);
+    return new NetworkInterface(wsUri, networkLogger);
   });
   
 

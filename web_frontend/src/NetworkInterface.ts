@@ -19,12 +19,13 @@ interface Packet {
 
 export class NetworkInterface {
 
-	wsUri = "http://localhost:16666";
+	wsUri: string;
 	websocket!: WebSocket;
 	logger?: ILogger;
 
-	constructor(logger?: ILogger) {
+	constructor(wsUri: string, logger?: ILogger) {
 		this.logger = logger;
+		this.wsUri = wsUri;
 		this.open();
 	}
 

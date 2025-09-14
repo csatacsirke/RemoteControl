@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace RemoteControlPC {
-    public partial class Form1 : Form {
-        public Form1() {
+    public partial class MainDialog : Form {
+        public MainDialog() {
             InitializeComponent();
         }
 
@@ -20,5 +20,11 @@ namespace RemoteControlPC {
             VirtualKeyboard.Test();
         }
 
+
+        public void ThreadSafeSetNetworkStatusText(string text) {
+            Invoke(new Action(() => {
+                m_networkStatusLabel.Text = text;
+            }));
+        }
     }
 }

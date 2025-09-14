@@ -12,9 +12,7 @@ using System.Windows.Forms;
 namespace RemoteControlPC {
     class CommandProcessor {
 
-        class Packet {
-            public string kind;
-        }
+
 
         public void Process(string commandJson) {
 

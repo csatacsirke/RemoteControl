@@ -20,9 +20,10 @@ namespace RemoteControlPC
         }
     }
 
-    class RemoteControlApplication {
+    class RemoteControlApplication : NetworkHandlerDelegate {
         private CommandProcessor commandProcessor = new CommandProcessor();
         private NetworkHandler networkHandler;
+        private MainDialog mainDialog;
 
         public RemoteControlApplication() {
             //networkHandler = new NetworkHandler(OnMessage);
@@ -31,17 +32,32 @@ namespace RemoteControlPC
 
         public void Run() {
 
-            networkHandler = new NetworkHandler(commandProcessor.Process);
-            networkHandler.StartHostThread();
-
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            mainDialog = new MainDialog();
+
+            
+            networkHandler = new NetworkHandler(this);
+            networkHandler.StartHostThread();
+            
+
+            Application.Run(mainDialog);
 
             // todo majd ezt nem muszáj bezárni 
             networkHandler.Close();
         }
-        
 
+        void NetworkHandlerDelegate.OnConnectionStatusChanged(ConnectionInfo connectionInfo) {
+            mainDialog.ThreadSafeSetNetworkStatusText(connectionInfo.connectionCount == 0 ? "No clients connected." : "Clients: " + connectionInfo.connectionCount.ToString());
+        }
+
+        void NetworkHandlerDelegate.OnFatalError(string message) {
+            MessageBox.Show(message);
+        }
+
+        void NetworkHandlerDelegate.OnMessageReceived(string message) {
+            commandProcessor.Process(message);
+        }
     }
 }
