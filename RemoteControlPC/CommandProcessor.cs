@@ -1,49 +1,69 @@
 ﻿using AudioSwitcher.AudioApi.CoreAudio;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace RemoteControlPC {
     class CommandProcessor {
-        public void Process(string command) {
 
-            var words = command.Split();
+        class Packet {
+            public string kind;
+        }
 
-            if (words.Length < 1) {
-                return;
+        public void Process(string commandJson) {
+
+            try {
+
+                var packet = JsonDocument.Parse(commandJson);
+                var root = packet.RootElement;
+
+                var kind = root.GetProperty("kind");
+
+
+                //root.TryGetProperty("event_data", out JsonElement eventData);
+                
+                
+
+                string[] words = { "TODO" };
+
+                switch (kind.GetString()) {
+                    case "keys":
+                        foreach (var word in words.Skip(1)) {
+                            VirtualKeyboard.SimulateKeypress(word);
+                        }
+                        break;
+                    case "mousemove":
+                        var eventData = root.GetProperty("event_data");
+                        double dx = eventData.GetProperty("dx").GetDouble();
+                        double dy = eventData.GetProperty("dy").GetDouble();
+                        VirtualKeyboard.SimulateMouseMove(dx, dy);
+                        break;
+                    case "click":
+                        VirtualKeyboard.SimulateMouseClick();
+                        break;
+                    case "scroll":
+                        foreach (var word in words.Skip(1)) {
+                            VirtualKeyboard.SimulateScroll(word);
+                        }
+                        break;
+                    case "spec":
+                        foreach (var word in words.Skip(1)) {
+                            ProcessSpecial(word);
+                        }
+                        break;
+
+                }
+
+            } catch (Exception) {
+                Debug.Assert(false);
             }
-
             
-
-            switch (words.First()) {
-                case "keys":
-                    foreach(var word in words.Skip(1)) {
-                        VirtualKeyboard.SimulateKeypress(word);
-                    }
-                    break;
-                case "move":
-                    foreach (var word in words.Skip(1)) {
-                        VirtualKeyboard.SimulateMouseMove(word);
-                    }
-                    break;
-                case "click":
-                    VirtualKeyboard.SimulateMouseClick();
-                    break;
-                case "scroll":
-                    foreach (var word in words.Skip(1)) {
-                        VirtualKeyboard.SimulateScroll(word);
-                    }
-                    break;
-                case "spec":
-                    foreach (var word in words.Skip(1)) {
-                        ProcessSpecial(word);
-                    }
-                    break;
-               
-            }
-
             //var command = "m 1 2 3";
             //var result = command.Split();
             //foreach(string str in result) {

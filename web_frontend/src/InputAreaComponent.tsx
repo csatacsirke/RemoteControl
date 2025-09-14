@@ -3,7 +3,7 @@ import { flushSync } from 'react-dom';
 import { EventType, NetworkInterface } from './NetworkInterface';
 import { Point } from './CommonTypes';
 
-
+const MAX_POINTER_MOVE_THAT_COUNTS_AS_CLICK = 10;
 
 export default function InputAreaComponent(props: {networkInterface: NetworkInterface}) {
 
@@ -11,6 +11,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 	let [lastPointerPosition, setLastPointerPosition] = useState<Point | null>(null);
 	let [logText, setLogText] = useState<string>("");
 	let [_debugClickCount, _setDebugClickCount] = useState<number>(0);
+	let [cumulativeMoveSincePointerDown, setCumulativeMoveSincePointerDown] = useState<number>(0);
 
 	let theElement = (
 		<div 
@@ -27,9 +28,11 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 	);
 
 	function onClick() {
-		if (isPointerDown) {
+		if (isPointerDown || cumulativeMoveSincePointerDown > MAX_POINTER_MOVE_THAT_COUNTS_AS_CLICK) {
 			return;
 		}
+		props.networkInterface.addClickEvent();
+
 		setLogText("click" + _debugClickCount.toString());
 		_setDebugClickCount(_debugClickCount + 1);
 	}
@@ -51,8 +54,9 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 			
 		props.networkInterface.addMouseMoveEvent(mouseDelta);
 
-		setLogText(`${ JSON.stringify([mouseDelta, lastPointerPosition, newPos])}`);
+		setLogText(`${ JSON.stringify([mouseDelta, lastPointerPosition, newPos, cumulativeMoveSincePointerDown])}`);
 		setLastPointerPosition(newPos);
+		setCumulativeMoveSincePointerDown(cumulativeMoveSincePointerDown + Math.hypot(mouseDelta.x, mouseDelta.y));
 		//e.stopPropagation();
 	}
 
@@ -64,6 +68,8 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 			x: e.clientX,
 			y: e.clientY
 		});
+		
+		setCumulativeMoveSincePointerDown(0);
 		//e.stopPropagation();
 	};
 
