@@ -62,7 +62,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 
 	function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
 		setPointerIsDown(true);
-		e.currentTarget.setPointerCapture(0);
+		e.currentTarget.setPointerCapture(e.pointerId);
 		//e.currentTarget.onpointermove = (e) => { onCapturedPointerMove(e) };
 		setLastPointerPosition({
 			x: e.clientX,
@@ -75,7 +75,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 
 	function onPointerUp(e: React.PointerEvent<HTMLDivElement>) {
 		//e.currentTarget.onpointermove = null;
-		e.currentTarget.releasePointerCapture(0);
+		e.currentTarget.releasePointerCapture(e.pointerId);
 		setPointerIsDown(false);
 		setLastPointerPosition(null);
 
