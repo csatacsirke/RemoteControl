@@ -6,8 +6,16 @@ export enum EventType {
 	MouseClick
 };
 
+
+export enum ConnectionState {
+	NotConnected,
+	Connected,
+	Disconnected,
+}
+
 export interface ILogger {
 	logMessage(message: string): void;
+	onStateChange(newState: ConnectionState): void;
 };
 
 
@@ -38,12 +46,16 @@ export class NetworkInterface {
 		};
 		this.websocket.onopen = () => {
 			this.logger?.logMessage("Connection is now open!");
+			this.logger?.onStateChange(ConnectionState.Connected);
 		};
 		this.websocket.onclose = () => {
 			this.logger?.logMessage("Connection has been closed!");
+			//this.logger?.onStateChange(ConnectionState.NotConnected);
+			this.logger?.onStateChange(ConnectionState.Disconnected);
 		}
 		this.websocket.onerror = () => {
 			this.logger?.logMessage("Connection has been closed with error!");
+			this.logger?.onStateChange(ConnectionState.Disconnected);
 		}
 		
 	}

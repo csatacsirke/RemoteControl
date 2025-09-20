@@ -36,16 +36,18 @@ namespace RemoteControlPC
             Application.SetCompatibleTextRenderingDefault(false);
 
             mainDialog = new MainDialog();
-
+            mainDialog.Show();
             
             networkHandler = new NetworkHandler(this);
-            networkHandler.StartHostThread();
+            Task hostTask = networkHandler.StartHostAsync();
             
-
+            
             Application.Run(mainDialog);
 
             // todo majd ezt nem muszáj bezárni 
             networkHandler.Close();
+
+            hostTask.Wait();
         }
 
         void NetworkHandlerDelegate.OnConnectionStatusChanged(ConnectionInfo connectionInfo) {
@@ -53,7 +55,9 @@ namespace RemoteControlPC
         }
 
         void NetworkHandlerDelegate.OnFatalError(string message) {
-            MessageBox.Show(message);
+            mainDialog.Invoke(new Action(() => {
+                mainDialog.ThreadSafeSetNetworkStatusText(message);
+            }));
         }
 
         void NetworkHandlerDelegate.OnMessageReceived(string message) {

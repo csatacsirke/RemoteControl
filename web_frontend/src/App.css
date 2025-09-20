@@ -47,6 +47,23 @@
   touch-action: none;
 }
 
-.pointer-is-captured {
-  background-color: darkgray;
+
+.input-area.client-is-connected {
+  background-color: rgb(122, 201, 135);
+}
+
+.input-area.network-error {
+  background-color: rgb(250, 0, 54);
+}
+
+.input-area.pointer-is-captured {
+  background-color: rgb(182, 233, 191);
+}
+
+.touch-screen-hint-logo {
+  background-image: url("./assets/touch-screen_11331816.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 50%;
+
 }

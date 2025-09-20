@@ -26,5 +26,11 @@ namespace RemoteControlPC {
                 m_networkStatusLabel.Text = text;
             }));
         }
+
+        public void ThreadSafeAddLog(string text) {
+            Invoke(new Action(() => {
+                m_logTextbox.Text = m_logTextbox.Text + text + "\n";
+            }));
+        }
     }
 }

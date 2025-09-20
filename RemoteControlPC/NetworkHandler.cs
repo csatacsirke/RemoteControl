@@ -33,7 +33,7 @@ namespace RemoteControlPC {
         TcpListener tcpListener;
         //private Action<string> m_OnMessageReceivedCallback;
         private NetworkHandlerDelegate m_delegate;
-        private Thread m_thread;
+        //private Thread m_thread;
 
         CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
 
@@ -45,15 +45,8 @@ namespace RemoteControlPC {
         }
 
 
-        public void StartHostThread() {
-            try {
-                m_thread = new Thread(HostThread);
-                m_thread.Start();
-            } catch (TaskCanceledException) {
-                // skip
-            } catch (Exception e) {
-                MessageBox.Show(e.ToString());
-            }
+        public async Task StartHostAsync() {
+            await HostThread();
         }
 
         public void Close() {
@@ -98,7 +91,7 @@ namespace RemoteControlPC {
             m_delegate.OnConnectionStatusChanged(new ConnectionInfo { connectionCount = m_connectionCount });
         }
 
-        private async Task StartAsyncReaderLoop(WebSocket webSocket) {
+        private async Task SocketReaderFunc(WebSocket webSocket) {
 
             ClientConnectionStarted();
             
@@ -108,32 +101,56 @@ namespace RemoteControlPC {
 
         }
 
-        private async void HostThread() {
+        private async Task HostThread() {
             try {
                 HttpListener httpListener = new HttpListener();
                 //httpListener.Prefixes.Add("ws://localhost:16666/");
                 //httpListener.Prefixes.Add("http://192.168.0.171:16666/");
-                httpListener.Prefixes.Add("http://nagygep.local:16666/");
+                //httpListener.Prefixes.Add("http://nagygep.local:16666/");
+                //httpListener.Prefixes.Add("http://192.168.0.171:16666/");
                 //httpListener.Prefixes.Add("http://localhost:16666/");
+
+                httpListener.Prefixes.Add("http://+:16666/");
                 httpListener.Start();
 
 
-                
+                List<Task> readerTasks = new List<Task>();
 
-                while (true) {
-                    HttpListenerContext context = await httpListener.GetContextAsync();
-                    if (context.Request.IsWebSocketRequest) {
-                        HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
-                        WebSocket webSocket = webSocketContext.WebSocket;
-                        //await StartAsyncReaderLoop(webSocket);
-                        await Task.Factory.StartNew(() => StartAsyncReaderLoop(webSocket));
+                try {
+                    while (true) {
+                        HttpListenerContext context = await httpListener.GetContextAsync();
+                        if (context.Request.IsWebSocketRequest) {
+                            HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
+                            WebSocket webSocket = webSocketContext.WebSocket;
+                            //await StartAsyncReaderLoop(webSocket);
+                            try {
+                                //await Task.Factory.StartNew(() => StartAsyncReaderLoop(webSocket));
+                                //var _ = Task.Run(() => SocketReaderFunc(webSocket));
+                                //Task readerTask = SocketReaderFunc(webSocket);
+                                //var readerTask = await Task.Factory.StartNew(() => SocketReaderFunc(webSocket));
+                                var readerTask = SocketReaderFunc(webSocket);
+                                readerTasks.Add(readerTask);
+
+                            } catch (Exception e) {
+                                m_delegate.OnFatalError(e.Message);
+                            }
+
+                        }
                     }
-
+                
+                } catch (TaskCanceledException) {
+                    // void
                 }
+                
+                await Task.WhenAll(readerTasks);
+
+            } catch (TaskCanceledException) {
 
             } catch (Exception e) {
                 m_delegate.OnFatalError(e.Message);
             }
+            
+
         }
 
 
