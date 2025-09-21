@@ -1,5 +1,14 @@
 .App {
+  
   text-align: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  
+  background-image: url("./assets/Beautiful-coffee-Background-for-Instagram-stories.jpg");
+  background-size: cover;
 }
 
 .App-logo {
@@ -14,14 +23,12 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -66,23 +73,6 @@
   background-position: center;
   background-size: 50%;
 
-}
-
-.tab-view {
-  /* margin: 5px; */
-  background-color: blue;
-}
-
-.tab-view > .tab-view-header {
-  display: block;
-  background-color: #61dafb;
-  
-  display: flex;
-}
-
-.tab-view > .tab-view-header > .tab-header-element {
-  font-size: 200%;
-  padding: 5px;
 }
 
 .keyboard-input {

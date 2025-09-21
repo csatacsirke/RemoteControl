@@ -1,0 +1,30 @@
+.tab-view {
+	/* margin: 5px; */
+	
+}
+
+.tab-view>.tab-view-header {
+	/* display: block; */
+	/* background-color: #61dafb; */
+
+	display: flex;
+	
+
+	
+	background-color: rgba(233, 192, 192, 0.603);
+}
+
+.tab-view>.tab-view-header>.tab-header-element {
+	padding: 5px;
+	
+	flex: 1;
+	
+	font-size: 200%;
+	color: rgb(83, 39, 39);
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: 900;
+}
+
+.tab-view>.tab-view-header>.selected-tab {
+	text-decoration: underline;
+}

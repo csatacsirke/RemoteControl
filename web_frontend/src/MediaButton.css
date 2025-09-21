@@ -1,0 +1,17 @@
+
+
+.media-button {
+	width: 52px;
+	height: 52px;
+
+	padding: 5px;
+
+	
+
+	background-image: url("./assets/media-icon-background.png");
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+	
+}
+

@@ -3,6 +3,7 @@ import { ConnectionState, NetworkInterface } from './NetworkInterface';
 import { Point } from './CommonTypes';
 import './App.css';
 import KeyboardInputComponent from './KeyboardInputComponent';
+import './InputArea.css'
 
 const MAX_POINTER_MOVE_THAT_COUNTS_AS_CLICK = 10;
 

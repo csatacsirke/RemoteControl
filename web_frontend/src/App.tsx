@@ -42,41 +42,29 @@ function App() {
     <React.StrictMode>
       <div className="App">
         <TabView tabs={[
+          
+          {
+            key: "1",
+            displayName: "General",
+            contents: (<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
+          },
           {
             key: "3",
             displayName: "Media",
             contents: (<MediaInterfaceComponent networkInterface={networkInterface} />)
           },
-          {
-            key: "1",
-            displayName: "Mouse",
-            contents: (<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
-          },
-          {
-            key: "2",
-            displayName: "Keyboard",
-            contents: (<KeyboardInputComponent networkInterface={networkInterface} />)
-          },
+          // {
+          //   key: "2",
+          //   displayName: "Keyboard",
+          //   contents: (<KeyboardInputComponent networkInterface={networkInterface} />)
+          // },
         ]} />
 
 
         <header className="App-header">
-          <input name="bullshit" type='text' />
-          <div>
+          <div style={{display: "none"}}>
             {networkLog}
           </div>
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
         </header>
       </div>
     </React.StrictMode>

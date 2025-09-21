@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import './TabView.css';
 
 
 export interface ITabViewElement {
@@ -20,7 +21,11 @@ export default function TabView(props: { tabs: ITabViewElement[] }) {
 			<span className="tab-view-header">
 				{
 					tabs.map((tab: ITabViewElement) => {
-						return (<span className='tab-header-element' key={tab.key} onClick={() =>setSelectedTabKey(tab.key)} >{tab.displayName}</span>);
+						let classes = ['tab-header-element'];
+						if (selectedTabKey === tab.key) {
+							classes.push("selected-tab")
+						}
+						return (<span className={classes.join(" ")} key={tab.key} onClick={() =>setSelectedTabKey(tab.key)} >{tab.displayName}</span>);
 					})
 				}
 			</span>

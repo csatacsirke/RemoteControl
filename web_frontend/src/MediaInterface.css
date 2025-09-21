@@ -1,12 +1,39 @@
 
 
 .media-interface-container {
-	font-size: 300%;
+	
+
+	background-color: rgb(117, 77, 53);
 }
 
 .media-interface-button {
 	cursor: pointer;
 	user-select: none;
-	margin-left: 5px;
-	margin-right: 5px;
+	/* margin-left: 5px;
+	margin-right: 5px; */
+
+	/* background-image: url("./assets/singe-coffee-bean-transparent.png"); */
+	/* margin-left: 15px;
+	margin-right: 15px; */
+	
+
+}
+
+.coffee-background {
+
+	color: white;
+	outline: 1px black;
+
+
+
+	background-image: url("./assets/edited topdown coffee cup.png");
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+
+.svg-icon {
+	width: 96px;
+	height: 96px;
 }
