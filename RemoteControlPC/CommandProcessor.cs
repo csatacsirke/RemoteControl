@@ -45,6 +45,13 @@ namespace RemoteControlPC {
                         VirtualKeyboard.SimulateMouseMove(dx, dy);
                         break;
                     }
+                    case "media": 
+                    {
+                        var eventData = root.GetProperty("event_data");
+                        string command = eventData.GetProperty("command").GetString();
+                        VirtualKeyboard.SimulateMediaKey(command);
+                        break;
+                    }
 
                     case "click":
                         VirtualKeyboard.SimulateMouseClick();

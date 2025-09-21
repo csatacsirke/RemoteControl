@@ -6,6 +6,7 @@ import { ConnectionState, ILogger, NetworkInterface } from './NetworkInterface';
 import TabView from './TabView';
 import KeyboardInputComponent from './KeyboardInputComponent';
 import React from 'react';
+import MediaInterfaceComponent from './MediaInterfaceComponent';
 
 
 // TODO config file
@@ -41,6 +42,11 @@ function App() {
     <React.StrictMode>
       <div className="App">
         <TabView tabs={[
+          {
+            key: "3",
+            displayName: "Media",
+            contents: (<MediaInterfaceComponent networkInterface={networkInterface} />)
+          },
           {
             key: "1",
             displayName: "Mouse",

@@ -18,6 +18,8 @@ export interface ILogger {
 	onStateChange(newState: ConnectionState): void;
 };
 
+export type MediaCommand = "play" | "rewind" | "fastforward" | "stop" | "volumeup" | "volumedown" | "mute";
+
 
 interface Packet {
 	kind: string;
@@ -101,5 +103,16 @@ export class NetworkInterface {
 			},
 		});
 	}
+
+
+	addMediaCommand(command: MediaCommand) {
+		this.sendMessage({
+			kind: "media",
+			event_data: {
+				command: command
+			},
+		});
+	}
+
 }
 

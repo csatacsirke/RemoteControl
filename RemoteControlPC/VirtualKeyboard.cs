@@ -98,6 +98,60 @@ namespace RemoteControlPC {
     
         }
 
+        private static ScanCodeShort ScanCodeFromMediaKeyString(string command) {
+
+            switch (command) {
+                case "play":
+                case "playpause":
+                    return ScanCodeShort.MEDIA_PLAY_PAUSE;
+                case "rewind":
+                    return ScanCodeShort.MEDIA_PREV_TRACK;
+                case "fastforward":
+                    return ScanCodeShort.MEDIA_NEXT_TRACK;
+                case "stop":
+                    return ScanCodeShort.MEDIA_STOP;
+            }
+            throw new Exception("Bad media command");
+        }
+
+       private static VirtualKeyShort VirtualKeyFromMediaKeyString(string command) {
+
+            switch (command) {
+                case "play":
+                case "playpause":
+                    return VirtualKeyShort.MEDIA_PLAY_PAUSE;
+                case "rewind":
+                    return VirtualKeyShort.MEDIA_PREV_TRACK;
+                case "fastforward":
+                    return VirtualKeyShort.MEDIA_NEXT_TRACK;
+                case "stop":
+                    return VirtualKeyShort.MEDIA_STOP;
+                case "volumeup":
+                    return VirtualKeyShort.VOLUME_UP;
+                case "volumedown":
+                    return VirtualKeyShort.VOLUME_DOWN;
+                case "mute":
+                    return VirtualKeyShort.VOLUME_MUTE;
+            }
+            throw new Exception("Bad media command");
+        }
+
+        public static void SimulateMediaKey(string command) {
+            try {
+
+                
+                INPUT Input = new INPUT();
+                Input.type = (uint)InputType.INPUT_KEYBOARD;
+
+                Input.U.ki.wVk = VirtualKeyFromMediaKeyString(command);
+                //Input.U.ki.wScan = ScaneCodeFromMediaKeyString(command);
+                //Input.U.ki.dwFlags = KEYEVENTF.SCANCODE;
+
+                SimulateUserInput(Input);
+            } catch (Exception) {
+                return;
+            }
+        }
 
         //// str: mov,-32,32,
         //public static void SimulateMouse(string str) {
@@ -117,12 +171,12 @@ namespace RemoteControlPC {
         //        Input.U.mi.dx = dx;
         //        Input.U.mi.dy = dy;
         //        Input.U.mi.dwFlags = MOUSEEVENTF.MOVE;
-                
+
         //        SimulateUserInput(Input);
         //    } catch (Exception) {
         //        return;
         //    } 
-        
+
         //}
 
         //private static INPUT TranslateMouseEventStringToInput(string str) {

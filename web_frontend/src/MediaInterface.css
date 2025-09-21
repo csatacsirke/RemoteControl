@@ -1,0 +1,12 @@
+
+
+.media-interface-container {
+	font-size: 300%;
+}
+
+.media-interface-button {
+	cursor: pointer;
+	user-select: none;
+	margin-left: 5px;
+	margin-right: 5px;
+}
