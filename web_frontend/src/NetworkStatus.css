@@ -1,0 +1,16 @@
+
+.network-status-bar {
+	font-family: monospace;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+
+.network-status-bar.connecting {
+	background-color: yellow;
+}
+
+.network-status-bar.error {
+	background-color: red;
+}

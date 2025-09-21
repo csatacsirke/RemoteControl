@@ -7,6 +7,7 @@ import TabView from './TabView';
 import KeyboardInputComponent from './KeyboardInputComponent';
 import React from 'react';
 import MediaInterfaceComponent from './MediaInterfaceComponent';
+import NetworkStatusComponent from './NetworkStatusComponent';
 
 
 // TODO config file
@@ -41,6 +42,7 @@ function App() {
   return (
     <React.StrictMode>
       <div className="App">
+        <NetworkStatusComponent connectionState={connectionState} />
         <TabView tabs={[
           
           {
