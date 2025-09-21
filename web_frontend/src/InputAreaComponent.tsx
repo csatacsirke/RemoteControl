@@ -7,7 +7,7 @@ import './InputArea.css'
 
 const MAX_POINTER_MOVE_THAT_COUNTS_AS_CLICK = 10;
 
-export default function InputAreaComponent(props: {networkInterface: NetworkInterface, connectionState: ConnectionState}) {
+export default function InputAreaComponent(props: {networkInterface: NetworkInterface}) {
 
 	let [isPointerDown, setPointerIsDown] = useState<boolean>(false);
 	let [lastPointerPosition, setLastPointerPosition] = useState<Point | null>(null);
@@ -25,18 +25,9 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 		classes.push("touch-screen-hint-logo");
 	}
 
-	if (isPointerDown && props.connectionState == ConnectionState.Connected) {
+	if (isPointerDown) {
 		classes.push("pointer-is-captured");
 	}
-
-	if (props.connectionState == ConnectionState.Connected) {
-		classes.push("client-is-connected");
-	} 
-
-	if (props.connectionState == ConnectionState.Disconnected) {
-		classes.push("network-error");
-	}
-
 
 	let mouseTouchAreaElement = (
 		<div 

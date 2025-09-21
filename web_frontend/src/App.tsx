@@ -48,7 +48,7 @@ function App() {
           {
             key: "1",
             displayName: "General",
-            contents: (<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
+            contents: (<InputAreaComponent networkInterface={networkInterface} />)
           },
           {
             key: "3",
