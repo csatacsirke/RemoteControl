@@ -13,7 +13,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 	let [needTouchHintLogo, setNeedTouchHintLogo] = useState<boolean>(true);
 
 	
-	let [isDebugMode, setDebugMode] = useState<boolean>(true);
+	let [isDebugMode, _setDebugMode] = useState<boolean>(true);
 	let [_debugLogText, _debugSetLogText] = useState<string>("");
 	let [_debugClickCount, _setDebugClickCount] = useState<number>(0);
 

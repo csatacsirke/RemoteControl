@@ -89,5 +89,17 @@ export class NetworkInterface {
 			kind: "click",
 		});
 	}
+
+	addKeyboardEvent(e: React.KeyboardEvent) {
+		
+		this.sendMessage({
+			kind: "keyboard",
+			event_data: {
+				key: e.key,
+				shift: e.shiftKey,
+				alt: e.altKey,
+			},
+		});
+	}
 }
 

@@ -4,6 +4,8 @@ import './App.css';
 import InputAreaComponent from './InputAreaComponent';
 import { ConnectionState as ConnectionState, ILogger, NetworkInterface } from './NetworkInterface';
 import TabView from './TabView';
+import KeyboardInputComponent from './KeyboardInputComponent';
+import React from 'react';
 
 
 // TODO config file
@@ -36,41 +38,43 @@ function App() {
 
 
   return (
+    <React.StrictMode>
+      <div className="App">
+        <TabView tabs={[
+          {
+            key: "1",
+            displayName: "Mouse",
+            contents: (<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
+          },
+          {
+            key: "2",
+            displayName: "Keyboard",
+            contents: (<KeyboardInputComponent networkInterface={networkInterface} />)
+          },
+        ]} />
 
-    <div className="App">
-      <TabView tabs={[
-        {
-          key: "1",
-          displayName: "Mouse", 
-          contents:(<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
-        },
-        {
-          key: "2",
-          displayName: "Keyboard", 
-          contents:(<input type='text' ></input>)
-        },
-      ]}/>
-               
-      
-      <header className="App-header">
-      <input  name="bullshit" type='text' />
-        <div>
-          {networkLog}
-        </div>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+        <header className="App-header">
+          <input name="bullshit" type='text' />
+          <div>
+            {networkLog}
+          </div>
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.tsx</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+        </header>
+      </div>
+    </React.StrictMode>
+    
   );
 }
 

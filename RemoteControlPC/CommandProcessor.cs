@@ -25,43 +25,52 @@ namespace RemoteControlPC {
 
 
                 //root.TryGetProperty("event_data", out JsonElement eventData);
-                
-                
 
-                string[] words = { "TODO" };
+
+
 
                 switch (kind.GetString()) {
-                    case "keys":
-                        foreach (var word in words.Skip(1)) {
-                            VirtualKeyboard.SimulateKeypress(word);
-                        }
+                    case "keyboard": 
+                    {
+                        var eventData = root.GetProperty("event_data");
+                        string key = eventData.GetProperty("key").GetString();
+                        VirtualKeyboard.SimulateKeypress(key);
                         break;
-                    case "mousemove":
+                    }
+                    case "mousemove": 
+                    {
                         var eventData = root.GetProperty("event_data");
                         double dx = eventData.GetProperty("dx").GetDouble();
                         double dy = eventData.GetProperty("dy").GetDouble();
                         VirtualKeyboard.SimulateMouseMove(dx, dy);
                         break;
+                    }
+
                     case "click":
                         VirtualKeyboard.SimulateMouseClick();
                         break;
-                    case "scroll":
+                    case "scroll": 
+                    {
+                        string[] words = { "TODO" };
                         foreach (var word in words.Skip(1)) {
                             VirtualKeyboard.SimulateScroll(word);
                         }
-                        break;
-                    case "spec":
+                    }
+                    break;
+                    case "spec": 
+                    {
+                        string[] words = { "TODO" };
                         foreach (var word in words.Skip(1)) {
                             ProcessSpecial(word);
                         }
                         break;
-
+                    }
                 }
 
             } catch (Exception) {
                 Debug.Assert(false);
             }
-            
+
             //var command = "m 1 2 3";
             //var result = command.Split();
             //foreach(string str in result) {

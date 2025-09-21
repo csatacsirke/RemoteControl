@@ -133,7 +133,7 @@ namespace RemoteControlPC {
             INPUT Input = new INPUT();
             Input.type = (uint)InputType.INPUT_KEYBOARD; 
 
-            switch(str) {
+            switch(str.ToUpper()) {
                 case "":
                     Input.U.ki.wScan = ScanCodeShort.SPACE;
                     Input.U.ki.dwFlags = KEYEVENTF.SCANCODE;
