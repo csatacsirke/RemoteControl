@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ConnectionState, NetworkInterface } from './NetworkInterface';
 import { Point } from './CommonTypes';
 import './App.css';
+import KeyboardInputComponent from './KeyboardInputComponent';
 
 const MAX_POINTER_MOVE_THAT_COUNTS_AS_CLICK = 10;
 
@@ -36,7 +37,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 	}
 
 
-	let theElement = (
+	let mouseTouchAreaElement = (
 		<div 
 			className={`input-area ${classes.join(" ")}`} 
 			onPointerDown={onPointerDown} 
@@ -111,7 +112,8 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 
 	return (
 		<>
-			{ theElement }
+			<KeyboardInputComponent networkInterface={props.networkInterface}/>
+			{ mouseTouchAreaElement }
 		</>
 	)
 }

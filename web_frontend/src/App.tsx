@@ -2,7 +2,7 @@ import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import InputAreaComponent from './InputAreaComponent';
-import { ConnectionState as ConnectionState, ILogger, NetworkInterface } from './NetworkInterface';
+import { ConnectionState, ILogger, NetworkInterface } from './NetworkInterface';
 import TabView from './TabView';
 import KeyboardInputComponent from './KeyboardInputComponent';
 import React from 'react';
