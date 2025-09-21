@@ -47,7 +47,8 @@ namespace RemoteControlPC
             // todo majd ezt nem muszáj bezárni 
             networkHandler.Close();
 
-            hostTask.Wait();
+            // ottrohadjonmeg... valamiért nem lehet rendesen le-cancelezni
+            //hostTask.Wait();
         }
 
         void NetworkHandlerDelegate.OnConnectionStatusChanged(ConnectionInfo connectionInfo) {

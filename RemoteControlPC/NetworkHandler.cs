@@ -30,7 +30,8 @@ namespace RemoteControlPC {
 
         public static readonly int PORT = 16666;
 
-        TcpListener tcpListener;
+        HttpListener m_httpListener;
+        
         //private Action<string> m_OnMessageReceivedCallback;
         private NetworkHandlerDelegate m_delegate;
         //private Thread m_thread;
@@ -41,7 +42,6 @@ namespace RemoteControlPC {
 
         public NetworkHandler(NetworkHandlerDelegate @delegate) {
             m_delegate = @delegate;
-            tcpListener = new TcpListener(IPAddress.Any, PORT);
         }
 
 
@@ -52,7 +52,12 @@ namespace RemoteControlPC {
         public void Close() {
             m_cancellationTokenSource.Cancel();
 
-            tcpListener.Stop();
+            if (m_httpListener != null) {
+                m_httpListener.Abort();
+                //m_httpListener.Stop();
+                //m_httpListener.Close();
+            }
+            
         }
 
         private async Task ReaderLoop(WebSocket websocket) {
@@ -103,22 +108,23 @@ namespace RemoteControlPC {
 
         private async Task HostThread() {
             try {
-                HttpListener httpListener = new HttpListener();
+                m_httpListener = new HttpListener();
                 //httpListener.Prefixes.Add("ws://localhost:16666/");
                 //httpListener.Prefixes.Add("http://192.168.0.171:16666/");
                 //httpListener.Prefixes.Add("http://nagygep.local:16666/");
                 //httpListener.Prefixes.Add("http://192.168.0.171:16666/");
                 //httpListener.Prefixes.Add("http://localhost:16666/");
 
-                httpListener.Prefixes.Add("http://+:16666/");
-                httpListener.Start();
+                
+                m_httpListener.Prefixes.Add("http://+:16666/");
+                m_httpListener.Start();
 
 
                 List<Task> readerTasks = new List<Task>();
-
+                
                 try {
                     while (true) {
-                        HttpListenerContext context = await httpListener.GetContextAsync();
+                        HttpListenerContext context = await m_httpListener.GetContextAsync();
                         if (context.Request.IsWebSocketRequest) {
                             HttpListenerWebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
                             WebSocket webSocket = webSocketContext.WebSocket;
