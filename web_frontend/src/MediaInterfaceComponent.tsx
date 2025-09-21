@@ -29,9 +29,8 @@ export default function MediaInterfaceComponent(props: {networkInterface: Networ
 				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("stop")}>⏹</span>
 				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("play")}>⏯</span>
 				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("fastforward")}>⏩</span> */}
-			</div>
-
-			<div className="media-interface-container">
+				<br/>
+				
 				<img src={volumeDownIcon} className="media-interface-button svg-icon" onClick={() => props.networkInterface.addMediaCommand("volumedown")}></img>
 				{/* <span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("volumedown")}>&ndash;</span> */}
 				{/* <span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("mute")}>🔇</span> */}
