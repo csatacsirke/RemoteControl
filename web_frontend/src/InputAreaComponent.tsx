@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { flushSync } from 'react-dom';
-import { ConnectionState, EventType, NetworkInterface } from './NetworkInterface';
+import { ConnectionState, NetworkInterface } from './NetworkInterface';
 import { Point } from './CommonTypes';
 import './App.css';
 
@@ -35,6 +34,7 @@ export default function InputAreaComponent(props: {networkInterface: NetworkInte
 	if (props.connectionState == ConnectionState.Disconnected) {
 		classes.push("network-error");
 	}
+
 
 	let theElement = (
 		<div 

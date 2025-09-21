@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
+import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import InputAreaComponent from './InputAreaComponent';
 import { ConnectionState as ConnectionState, ILogger, NetworkInterface } from './NetworkInterface';
-import { createContext } from 'vm';
+import TabView from './TabView';
 
 
 // TODO config file
@@ -36,9 +36,24 @@ function App() {
 
 
   return (
+
     <div className="App">
+      <TabView tabs={[
+        {
+          key: "1",
+          displayName: "Mouse", 
+          contents:(<InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />)
+        },
+        {
+          key: "2",
+          displayName: "Keyboard", 
+          contents:(<input type='text' ></input>)
+        },
+      ]}/>
+               
+      
       <header className="App-header">
-        <InputAreaComponent networkInterface={networkInterface} connectionState={connectionState} />       
+      <input  name="bullshit" type='text' />
         <div>
           {networkLog}
         </div>
