@@ -1,0 +1,21 @@
+
+
+input::placeholder  {
+	font-family: 'Courier New', Courier, monospace;
+	font-weight: 900;
+	color: white;
+	opacity: 1;
+}
+
+input {
+	background-color: rgb(117, 77, 53);
+	border: 0px;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+*:focus {
+    outline: none;
+}

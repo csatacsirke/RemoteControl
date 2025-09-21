@@ -1,4 +1,5 @@
 import { NetworkInterface } from "./NetworkInterface";
+import './KeyboardInput.css'
 
 export default function KeyboardInputComponent(props: {networkInterface: NetworkInterface, autofocus?: boolean}) {
 
