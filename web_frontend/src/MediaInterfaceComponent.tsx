@@ -24,17 +24,9 @@ export default function MediaInterfaceComponent(props: {networkInterface: Networ
 				<MediaButton src={stopIcon} onClick={() => props.networkInterface.addMediaCommand("stop")}></MediaButton>
 				<MediaButton src={playIcon} onClick={() => props.networkInterface.addMediaCommand("play")}></MediaButton>
 				<MediaButton src={ffIcon} onClick={() => props.networkInterface.addMediaCommand("fastforward")}></MediaButton>
-{/* 				
-				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("rewind")}>⏪</span>
-				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("stop")}>⏹</span>
-				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("play")}>⏯</span>
-				<span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("fastforward")}>⏩</span> */}
 				<br/>
 				
 				<img src={volumeDownIcon} className="media-interface-button svg-icon" onClick={() => props.networkInterface.addMediaCommand("volumedown")}></img>
-				{/* <span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("volumedown")}>&ndash;</span> */}
-				{/* <span className="media-interface-button" onClick={() => props.networkInterface.addMediaCommand("mute")}>🔇</span> */}
-				{/* <span className="media-interface-button coffee-background" onClick={() => props.networkInterface.addMediaCommand("volumeup")}>+</span> */}
 				<img src={muteIcon} className="media-interface-button svg-icon" onClick={() => props.networkInterface.addMediaCommand("volumeup")}></img>
 				<img src={volumeUpIcon} className="media-interface-button svg-icon" onClick={() => props.networkInterface.addMediaCommand("volumeup")}></img>
 			</div>
