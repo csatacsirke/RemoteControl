@@ -36,12 +36,12 @@ namespace RemoteControlPC {
         private NetworkHandlerDelegate m_delegate;
         //private Thread m_thread;
 
-        CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
-
+        private CancellationToken m_cancellationToken;
         
 
-        public NetworkHandler(NetworkHandlerDelegate @delegate) {
+        public NetworkHandler(NetworkHandlerDelegate @delegate, CancellationToken cancellationToken) {
             m_delegate = @delegate;
+            m_cancellationToken = cancellationToken;
         }
 
 
@@ -50,8 +50,7 @@ namespace RemoteControlPC {
         }
 
         public void Close() {
-            m_cancellationTokenSource.Cancel();
-
+            
             if (m_httpListener != null) {
                 m_httpListener.Abort();
                 //m_httpListener.Stop();
@@ -67,7 +66,7 @@ namespace RemoteControlPC {
 
 
                 while (websocket.State == WebSocketState.Open) {
-                    WebSocketReceiveResult message = await websocket.ReceiveAsync(bufferWrapper, m_cancellationTokenSource.Token);
+                    WebSocketReceiveResult message = await websocket.ReceiveAsync(bufferWrapper, m_cancellationToken);
                     if (message.MessageType == WebSocketMessageType.Text) {
                         string messsageText = UTF8Encoding.UTF8.GetString(buffer, 0, message.Count);
                         m_delegate.OnMessageReceived(messsageText);

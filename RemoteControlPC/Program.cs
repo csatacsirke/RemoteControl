@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -24,6 +25,8 @@ namespace RemoteControlPC
         private CommandProcessor commandProcessor = new CommandProcessor();
         private NetworkHandler networkHandler;
         private MainDialog mainDialog;
+        
+        private CancellationTokenSource m_cancellationTokenSource = new CancellationTokenSource();
 
         public RemoteControlApplication() {
             //networkHandler = new NetworkHandler(OnMessage);
@@ -38,11 +41,13 @@ namespace RemoteControlPC
             mainDialog = new MainDialog();
             mainDialog.Show();
             
-            networkHandler = new NetworkHandler(this);
+            networkHandler = new NetworkHandler(this, m_cancellationTokenSource.Token);
             Task hostTask = networkHandler.StartHostAsync();
             
             
             Application.Run(mainDialog);
+
+            m_cancellationTokenSource.Cancel();
 
             // todo majd ezt nem muszáj bezárni 
             networkHandler.Close();
