@@ -40,7 +40,12 @@ export class NetworkInterface {
 	}
 
 	open() {
+		if (this.websocket && this.websocket.readyState != this.websocket.CLOSED) {
+			return;
+		}
+
 		this.logger?.logMessage("opening connection...");
+
 		this.websocket = new WebSocket(this.wsUri);	
 		this.websocket.onmessage = (e: MessageEvent) => {
 			//alert(e.data());
@@ -54,14 +59,25 @@ export class NetworkInterface {
 			this.logger?.logMessage("Connection has been closed!");
 			//this.logger?.onStateChange(ConnectionState.NotConnected);
 			this.logger?.onStateChange(ConnectionState.Disconnected);
+			this.reconnectAsync();
 		}
 		this.websocket.onerror = () => {
 			this.logger?.logMessage("Connection has been closed with error!");
 			this.logger?.onStateChange(ConnectionState.Disconnected);
+			this.reconnectAsync();
 		}
 		
 	}
 
+	reconnect() {
+		this.open();
+	}
+
+	reconnectAsync() {
+		setTimeout(() => {
+			this.reconnect();
+		}, 1000);
+	}
 
 	sendMessage(message: Packet) {
 		if (this.websocket.readyState === this.websocket.OPEN) {
